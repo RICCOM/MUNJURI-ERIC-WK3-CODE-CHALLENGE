@@ -1,3 +1,5 @@
+https://riccom.github.io/MUNJURI-ERIC-WK3-CODE-CHALLENGE/
+
 # Flatdango
 
 Flatiron Movie Theater is open for business! You will be building out an
