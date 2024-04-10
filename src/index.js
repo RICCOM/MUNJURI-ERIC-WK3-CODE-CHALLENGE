@@ -1,4 +1,46 @@
-// Function to display movie details based on ID
+// Your code here
+document.addEventListener('DOMContentLoaded', () => {
+    // Fetch films data from the server
+    fetch("http://localhost:3000/films")
+        .then(res => res.json())
+        .then(data => {
+
+            let titleList = document.querySelector("ul#films");
+            
+            titleList.querySelector("li").remove();
+            
+            data.forEach((item) => {
+                
+                let list = document.createElement("li");
+                list.textContent = `${item.title} `;
+                list.className = "film item";
+                list.dataset.id = item.id; 
+                titleList.appendChild(list);
+
+                let btn = document.createElement("button");
+                btn.textContent = " X";
+                list.appendChild(btn);
+
+                // Event listener to delete the film
+                btn.addEventListener("click", (e) => {
+                    e.target.parentNode.remove();
+                    
+                    fetch(`http://localhost:3000/films/${item.id}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                    })
+                        .then(res => res.json())
+                        .then(data => console.log(data))
+                        .catch(error => {
+                            alert("DELETE ERROR");
+                            console.log(error.message);
+                        });
+                });
+            });
+
+            // Function to display movie details based on ID
             function displayMovie(movieId) {
                 fetch(`http://localhost:3000/films/${movieId}`)
                     .then(res => res.json())
